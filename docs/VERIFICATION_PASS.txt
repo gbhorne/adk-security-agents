@@ -1,0 +1,88 @@
+AutoSOC Infrastructure Verification
+Run date: 2026-03-08
+Project: sec-autosoc
+Region: us-central1
+
+============================================================
+  GCP Authentication
+============================================================
+  [PASS] Application Default Credentials: project=sec-autosoc
+  [PASS] GCP Project accessible: project_id=sec-autosoc, state=ACTIVE
+
+============================================================
+  Pub/Sub Topics and Subscriptions
+============================================================
+  [PASS] Topic: scc-findings-raw: exists: projects/sec-autosoc/topics/scc-findings-raw
+  [PASS] Topic: investigation-events: exists: projects/sec-autosoc/topics/investigation-events
+  [PASS] Topic: remediation-requests: exists: projects/sec-autosoc/topics/remediation-requests
+  [PASS] Topic: findings-complete: exists: projects/sec-autosoc/topics/findings-complete
+  [PASS] Subscription: scc-findings-sub: exists, ack_deadline=10s
+  [PASS] Subscription: investigation-events-sub: exists, ack_deadline=10s
+  [PASS] Subscription: remediation-requests-sub: exists, ack_deadline=10s
+  [PASS] Subscription: findings-complete-sub: exists, ack_deadline=10s
+
+============================================================
+  BigQuery Dataset and Tables
+============================================================
+  [PASS] BigQuery dataset: autosoc_data: dataset_id=autosoc_data, location=US
+  [PASS] BigQuery table: findings: rows=5, schema_fields=9
+  [PASS] BigQuery table: baselines: rows=0, schema_fields=6
+  [PASS] BigQuery table: timelines: rows=0, schema_fields=7
+
+============================================================
+  Firestore
+============================================================
+  [PASS] Firestore write/read/delete: write/read/delete successful, doc_id=verify-b5811cdd
+  [PASS] Firestore investigations collection: investigations collection accessible, sample_count=3
+
+============================================================
+  Cloud Storage
+============================================================
+  [PASS] GCS bucket: autosoc-sec-evidence: bucket=autosoc-sec-evidence, location=US-CENTRAL1
+  [PASS] GCS write/delete: write/delete to autosoc-sec-evidence successful
+
+============================================================
+  Vertex AI / Gemini
+============================================================
+  [PASS] Vertex AI Gemini model: Gemini responded: AutoSOC verification successful
+
+============================================================
+  Cloud Asset Inventory
+============================================================
+  [PASS] Cloud Asset Inventory API: IAM policy search returned 4 result(s)
+
+============================================================
+  Cloud Logging
+============================================================
+  [PASS] Cloud Logging API: log entries accessible, count=3
+
+============================================================
+  Agent Module Imports
+============================================================
+  [PASS] Import: shared config: imported successfully
+  [PASS] Import: shared models: imported successfully
+  [PASS] Import: pubsub client: imported successfully
+  [PASS] Import: detection agent: imported successfully
+  [PASS] Import: triage agent: imported successfully
+  [PASS] Import: threat intel agent: imported successfully
+  [PASS] Import: forensics agent: imported successfully
+  [PASS] Import: remediation agent: imported successfully
+  [PASS] Import: reporting agent: imported successfully
+
+============================================================
+  End-to-End Agent Pipeline
+============================================================
+  [PASS] Detection agent: classify finding: alert created: inv-20260308-550164a5, type=PUBLIC_BUCKET
+  [PASS] BigQuery: findings table queryable: latest finding: inv-20260308-1086b422, score=8
+  [PASS] Firestore: investigations count: total investigations: 3, latest: inv-20260308-cd27b06c, status=RESOLVED
+
+============================================================
+  Verification Summary
+============================================================
+
+  Total checks : 33
+  Passed       : 33
+  Failed       : 0
+  Skipped      : 0
+
+  STATUS: ALL CHECKS PASSED - AutoSOC infrastructure is fully operational
